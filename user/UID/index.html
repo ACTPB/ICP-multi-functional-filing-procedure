@@ -18,10 +18,10 @@
         }
         .container {
             max-width: 600px;
-            width: 100%;
+            width: 90%; /* 修改宽度确保在小屏幕上适应 */
             background: rgba(255, 255, 255, 0.1);
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 25px; /* 增加圆角幅度 */
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -39,10 +39,22 @@
         }
         input[type="text"], input[type="url"] {
             width: 100%;
+            max-width: calc(100% - 20px); /* 确保最大宽度不超过容器宽度 */
             padding: 10px;
             margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.3); /* 毛玻璃效果 */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px; /* 增加圆角幅度 */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #333;
+            outline: none; /* 取消默认的聚焦外框 */
+            transition: all 0.3s ease; /* 添加过渡效果 */
+        }
+        input[type="text"]:focus, input[type="url"]:focus {
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
         button {
             display: block;
@@ -51,13 +63,14 @@
             background: rgba(255, 255, 255, 0.1);
             color: #333;
             border: none;
-            border-radius: 4px;
+            border-radius: 15px; /* 增加圆角幅度 */
             font-size: 16px;
             cursor: pointer;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease; /* 添加过渡效果 */
         }
         button:hover {
             background-color: rgba(255, 255, 255, 0.2);
