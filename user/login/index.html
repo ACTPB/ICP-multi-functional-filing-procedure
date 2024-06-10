@@ -1,36 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录和注册页面</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>登录和注册</title>
+    <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('/mnt/data/001.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'CustomFont', Arial, sans-serif;
+            background: url('bj.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+        }
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #333;
+            transition: width 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+            outline: none;
+            font-family: 'CustomFont', Arial, sans-serif;
+        }
+        input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+            width: 100%;
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        input::placeholder {
+            color: #000;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #333;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 10px;
+            font-family: 'CustomFont', Arial, sans-serif;
+        }
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .switch {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .switch a {
+            color: #2196F3;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .switch a:hover {
+            text-decoration: underline;
+        }
+        .form-container {
+            position: relative;
+            display: flex;
+            width: 200%;
+            transition: transform 0.5s ease;
+        }
+        form {
+            flex: 1;
+            padding: 20px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            font-family: 'CustomFont', Arial, sans-serif;
+        }
+        form.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        #loginForm.active ~ #registerForm {
+            transform: translateX(100%);
+        }
+        #registerForm.active ~ #loginForm {
+            transform: translateX(-100%);
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            color: #333;
+            font-family: 'CustomFont', Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="form-container">
-            <div class="form-toggle">
-                <button id="login-toggle" onclick="toggleForm('login')">登录</button>
-                <button id="register-toggle" onclick="toggleForm('register')">注册</button>
-            </div>
+        <h1 id="formTitle">登录</h1>
+        <div class="form-container" id="formContainer">
+            <form id="loginForm" class="active">
+                <div class="input-container">
+                    <input type="email" id="loginEmail" name="loginEmail" placeholder="请输入邮箱" required>
+                </div>
 
-            <form id="login-form" class="form" onsubmit="return validateLogin()">
-                <h2>登录</h2>
-                <input type="email" id="login-email" placeholder="请输入邮箱" required>
-                <input type="password" id="login-password" placeholder="请输入密码" required>
+                <div class="input-container">
+                    <input type="password" id="loginPassword" name="loginPassword" placeholder="请输入密码" required>
+                </div>
+
                 <button type="submit">登录</button>
             </form>
 
-            <form id="register-form" class="form" onsubmit="return validateRegister()">
-                <h2>注册</h2>
-                <input type="email" id="register-email" placeholder="请输入邮箱" required>
-                <input type="password" id="register-password" placeholder="请输入密码" required>
-                <input type="password" id="register-confirm-password" placeholder="确认密码" required>
+            <form id="registerForm">
+                <div class="input-container">
+                    <input type="text" id="registerName" name="registerName" placeholder="请输入用户名" required>
+                </div>
+
+                <div class="input-container">
+                    <input type="email" id="registerEmail" name="registerEmail" placeholder="请输入邮箱" required>
+                </div>
+
+                <div class="input-container">
+                    <input type="password" id="registerPassword" name="registerPassword" placeholder="请输入密码" required>
+                </div>
+
                 <button type="submit">注册</button>
             </form>
         </div>
+
+        <div class="switch">
+            <span id="switchToRegister">没有账户？<a href="#">注册</a></span>
+            <span id="switchToLogin" style="display: none;">已有账户？<a href="#">登录</a></span>
+        </div>
     </div>
 
-    <script src="scripts.js"></script>
+    <footer>
+        © 2024 Your Company. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById('switchToRegister').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('registerForm').classList.add('active');
+            document.getElementById('formContainer').style.transform = 'translateX(-50%)';
+            document.getElementById('formTitle').textContent = '注册';
+            document.getElementById('switchToRegister').style.display = 'none';
+            document.getElementById('switchToLogin').style.display = 'block';
+        });
+
+        document.getElementById('switchToLogin').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('loginForm').classList.add('active');
+            document.getElementById('formContainer').style.transform = 'translateX(0)';
+            document.getElementById('formTitle').textContent = '登录';
+            document.getElementById('switchToRegister').style.display = 'block';
+            document.getElementById('switchToLogin').style.display = 'none';
+        });
+
+        // 示例提交事件处理
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('登录功能待实现');
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('注册功能待实现');
+        });
+    </script>
 </body>
 </html>
