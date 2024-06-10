@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRTA</title>
+    <style>
+        @font-face {
+            font-family: 'CustomFont1';
+            src: url('001.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'CustomFont2';
+            src: url('002.ttf') format('truetype');
+        }
+
+        body {
+            margin: 0;
+            font-family: 'CustomFont1', Arial, sans-serif; /* 应用第一个自定义字体 */
+            background: url('bj.jpg') no-repeat center center fixed; /* 设置背景图片 */
+            background-size: cover; /* 背景图片自适应填充 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* 使页面高度填满视窗 */
+        }
+        .navbar-container {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            width: 100%;
+            position: fixed; /* 固定在顶部 */
+            top: 0;
+            left: 0;
+            z-index: 1000; /* 确保导航栏在最前面 */
+            background-color: transparent; /* 透明背景以显示内容 */
+            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+        }
+        .navbar {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
+            padding: 0.5rem 1rem;
+            border-radius: 10px; /* 圆角 */
+            width: 100%;
+            max-width: 1200px; /* 最大宽度 */
+            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+        }
+        .navbar .menu {
+            display: flex;
+            justify-content: center; /* 水平居中对齐 */
+            align-items: center; /* 垂直居中 */
+        }
+        .navbar a {
+            color: black; /* 文字颜色 */
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s;
+            border-radius: 5px; /* 链接的圆角 */
+            font-family: 'CustomFont1', Arial, sans-serif; /* 应用第一个自定义字体 */
+        }
+        .navbar a:hover {
+            background-color: rgba(0, 0, 0, 0.1); /* 悬停时的半透明背景色 */
+        }
+        .navbar .toggle-button {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .navbar .toggle-button div {
+            width: 25px;
+            height: 3px;
+            background-color: black; /* 菜单按钮颜色 */
+            margin: 4px 0;
+            border-radius: 2px; /* 汉堡菜单条目的圆角 */
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .navbar .menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.9); /* 移动端菜单的背景色 */
+                position: absolute;
+                top: 60px; /* 适当调整菜单的垂直位置 */
+                left: 0;
+                border-radius: 0 0 10px 10px; /* 底部的圆角 */
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+                backdrop-filter: blur(10px); /* 毛玻璃效果 */
+                -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+            }
+            .navbar .menu a {
+                padding: 1rem;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+            }
+            .navbar .toggle-button {
+                display: flex;
+            }
+            .navbar .menu.active {
+                display: flex;
+            }
+        }
+        .title {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            font-family: 'CustomFont2', Arial, sans-serif; /* 应用第二个自定义字体 */
+            font-style: italic; /* 斜体 */
+        }
+        .search-container {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
+            padding: 0.5rem 1rem;
+            border-radius: 10px; /* 圆角 */
+            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+        }
+        .search-container input[type="text"] {
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            -webkit-backdrop-filter: blur(5px); /* 兼容Safari */
+            color: black; /* 文字颜色 */
+            font-family: 'CustomFont1', Arial, sans-serif; /* 应用第一个自定义字体 */
+        }
+        .search-container button {
+            padding: 0.5rem 1rem;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            font-family: 'CustomFont1', Arial, sans-serif; /* 应用第一个自定义字体 */
+        }
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <div class="navbar">
+            <div class="toggle-button" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menu" id="menu">
+                <a href="/user.php/login">登录</a>
+                <a href="/user.php/register">申请ICP/注册账号</a>
+                <a href="#">发布页</a>
+                <a href="#">联系我们</a>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="title">HT</h1>
+
+    <div class="search-container">
+        <input type="text" placeholder="搜索...">
+        <button type="button">搜索</button>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
