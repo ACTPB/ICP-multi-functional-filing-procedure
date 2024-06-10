@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录和注册页面</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-toggle">
+                <button id="login-toggle" onclick="toggleForm('login')">登录</button>
+                <button id="register-toggle" onclick="toggleForm('register')">注册</button>
+            </div>
 
+            <form id="login-form" class="form" onsubmit="return validateLogin()">
+                <h2>登录</h2>
+                <input type="email" id="login-email" placeholder="请输入邮箱" required>
+                <input type="password" id="login-password" placeholder="请输入密码" required>
+                <button type="submit">登录</button>
+            </form>
+
+            <form id="register-form" class="form" onsubmit="return validateRegister()">
+                <h2>注册</h2>
+                <input type="email" id="register-email" placeholder="请输入邮箱" required>
+                <input type="password" id="register-password" placeholder="请输入密码" required>
+                <input type="password" id="register-confirm-password" placeholder="确认密码" required>
+                <button type="submit">注册</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

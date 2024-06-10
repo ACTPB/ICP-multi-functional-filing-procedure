@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('bj.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    width: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.form-container {
+    text-align: center;
+}
+
+.form-toggle button {
+    width: 50%;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 15px;
+    transition: background 0.3s;
+}
+
+.form-toggle button.active {
+    background: rgba(0, 123, 255, 0.6);
+}
+
+.form-toggle button:hover {
+    background: rgba(0, 123, 255, 0.8);
+}
+
+.form {
+    display: none;
+    margin-top: 20px;
+}
+
+.form input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+    color: black;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.form input::placeholder {
+    color: black;
+}
+
+.form button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    background: rgba(0, 123, 255, 0.6);
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: background 0.3s;
+}
+
+.form button:hover {
+    background: rgba(0, 123, 255, 0.8);
+}
