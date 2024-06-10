@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申请专属UID</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('bj.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 10;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #333;
+        }
+        input[type="text"], input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e7f3fe;
+            border-left: 6px solid #2196F3;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .buttons button {
+            width: 48%;
+        }
+        .sakura {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: url('sakura.png') no-repeat center center;
+            background-size: contain;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>申请专属UID</h1>
+        <form id="uidForm">
+            <label for="siteName">网站名称：</label>
+            <input type="text" id="siteName" name="siteName" required>
 
+            <label for="siteUrl">网站链接：</label>
+            <input type="url" id="siteUrl" name="siteUrl" required>
+
+            <button type="submit">生成UID</button>
+        </form>
+        <div class="result" id="result" style="display: none;">
+            <p><strong>生成的UID：</strong> <span id="uid"></span></p>
+            <div class="buttons">
+                <button id="confirmSave">确认保存</button>
+                <button id="cancelSave">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uidForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const siteName = document.getElementById('siteName').value;
+            const siteUrl = document.getElementById('siteUrl').value;
+            
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const uid = `${year}${month}${day}${hours}${minutes}${seconds}`;
+            
+            document.getElementById('uid').textContent = uid;
+            document.getElementById('result').style.display = 'block';
+        });
+
+        document.getElementById('confirmSave').addEventListener('click', function() {
+            const siteName = document.getElementById('siteName').value;
+            const siteUrl = document.getElementById('siteUrl').value;
+            const uid = document.getElementById('uid').textContent;
+            
+            const data = `${siteName}•${siteUrl}•${uid}\n`;
+
+            // 发送数据到PHP脚本
+            fetch('save_uid.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `data=${encodeURIComponent(data)}`
+            })
+            .then(response => response.text())
+            .then(result => {
+                if (result === 'success') {
+                    alert('UID保存成功');
+                } else {
+                    alert('保存UID失败，请重试。');
+                }
+                document.getElementById('result').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('错误:', error);
+                alert('保存UID失败，请重试。');
+                document.getElementById('result').style.display = 'none';
+            });
+        });
+
+        document.getElementById('cancelSave').addEventListener('click', function() {
+            document.getElementById('result').style.display = 'none';
+        });
+
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.classList.add('sakura');
+            sakura.style.left = Math.random() * window.innerWidth + 'px';
+            sakura.style.animationDuration = 5 + Math.random() * 5 + 's';
+            sakura.style.opacity = Math.random();
+            document.body.appendChild(sakura);
+
+            setTimeout(() => {
+                sakura.remove();
+            }, 10000);
+        }
+
+        setInterval(createSakura, 300);
+    </script>
+</body>
+</html>
