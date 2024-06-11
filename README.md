@@ -1,4 +1,4 @@
-# IKUN-ICP-multi-functional-filing-procedure
+# -ICP-multi-functional-filing-procedure
 ICP multi-functional filing procedure
 This program was done by Kizuki Studio in collaboration with other developers
 
